@@ -17,7 +17,9 @@ class TaskTile extends StatelessWidget {
     return ListTile(
       leading: CircleAvatar(child: Icon(Icons.task_alt)),
       title: Text(task.title),
-      subtitle: Text(task.description),
+      isThreeLine: true,
+      dense: true,
+      subtitle: Text("${task.description}. Criado em: ${task.createdAt}"),
       trailing: Container(
         width: 100,
         child: Row(
