@@ -70,7 +70,13 @@ class TaskForm extends StatelessWidget {
               TextFormField(
                 initialValue: _formData['description'].toString(),
                 decoration: InputDecoration(labelText: 'Descrição'),
-                onSaved: (value) => _formData['description'] = value.toString(),
+                onSaved: (value) => {
+                  _formData['description'] = value.toString(),
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text("Os dados da tarefa \"" +
+                          _formData['title'].toString() +
+                          "\" foram salvos!")))
+                },
               ),
             ],
           ),
