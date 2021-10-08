@@ -5,7 +5,6 @@ import 'package:flutter_todoapp/provider/tasks.dart';
 import 'package:provider/provider.dart';
 
 class TaskForm extends StatelessWidget {
-
   final _form = GlobalKey<FormState>();
   final Map<String, Object> _formData = {};
 
@@ -25,7 +24,6 @@ class TaskForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final Task? task = ModalRoute.of(context)?.settings.arguments as Task?;
     _loadFormData(task);
 
@@ -34,25 +32,21 @@ class TaskForm extends StatelessWidget {
         title: Text('Criar Tarefa'),
         actions: [
           IconButton(
-            onPressed: () {
-              final isValid = _form.currentState!.validate();
-              if (isValid) {
-                _form.currentState!.save();
+              onPressed: () {
+                final isValid = _form.currentState!.validate();
+                if (isValid) {
+                  _form.currentState!.save();
 
-                Provider.of<Tasks>(context, listen: false).put(
-                  Task(
-                    id: _formData['id'].toString(),
-                    title: _formData['title'].toString(), 
-                    description: _formData['description'].toString(), 
-                    createdAt: DateTime.now().toString(), 
-                    done: false
-                  )
-                );
-                Navigator.of(context).pop();
-              }
-            }, 
-            icon: Icon(Icons.save)
-          )
+                  Provider.of<Tasks>(context, listen: false).put(Task(
+                      id: _formData['id'].toString(),
+                      title: _formData['title'].toString(),
+                      description: _formData['description'].toString(),
+                      createdAt: DateTime.now().toString(),
+                      done: false));
+                  Navigator.of(context).pop();
+                }
+              },
+              icon: Icon(Icons.save))
         ],
       ),
       body: Padding(
@@ -81,6 +75,24 @@ class TaskForm extends StatelessWidget {
             ],
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          final isValid = _form.currentState!.validate();
+          if (isValid) {
+            _form.currentState!.save();
+
+            Provider.of<Tasks>(context, listen: false).put(Task(
+                id: _formData['id'].toString(),
+                title: _formData['title'].toString(),
+                description: _formData['description'].toString(),
+                createdAt: DateTime.now().toString(),
+                done: false));
+            Navigator.of(context).pop();
+          }
+        },
+        tooltip: 'Salvar Tarefa',
+        child: Icon(Icons.save),
       ),
     );
   }
