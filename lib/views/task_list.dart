@@ -42,20 +42,25 @@ class TaskList extends StatelessWidget {
                   actions: [
                     IconButton(
                         onPressed: () {
-                          Navigator.of(context).pushNamed(AppRoutes.TASK_FORM).then((_) => BlocProvider.of<TaskBloc>(context)..add(FetchTaskList()));
+                          Navigator.of(context).pushNamed(AppRoutes.TASK_FORM).then((_) => BlocProvider.of<TaskBloc>(context).add(FetchTaskList()));
                         },
                         icon: Icon(Icons.add))
                   ],
                 ),
                 floatingActionButton: FloatingActionButton(
                   onPressed: () {
-                    Navigator.of(context).pushNamed(AppRoutes.TASK_FORM).then((_) => BlocProvider.of<TaskBloc>(context)..add(FetchTaskList()));
+                    Navigator.of(context).pushNamed(AppRoutes.TASK_FORM).then((_) => BlocProvider.of<TaskBloc>(context).add(FetchTaskList()));
                   },
                   tooltip: 'Nova Tarefa',
                   child: Icon(Icons.add),
                 ),
               ),
             );
+          }
+
+          if (state is UpdateTaskState) {
+                          
+            print("AAAAAAAAAAa");
           }
 
           return CircularProgressIndicator();

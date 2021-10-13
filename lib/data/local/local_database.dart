@@ -7,7 +7,7 @@ import 'package:sqflite/sqflite.dart';
 
 class DatabaseLocalServer {
   static DatabaseLocalServer helper = DatabaseLocalServer._createInstance();
-  static late Database _database;
+  static Database? _database;
   String taskTable = "task_table";
   String colTitle = "title";
   String colDescription = "description";
@@ -17,7 +17,7 @@ class DatabaseLocalServer {
 
   DatabaseLocalServer._createInstance();
 
-  Future<Database> get database async {
+  Future<Database?> get database async {
     if (_database == null) {
       _database = await initializeDatabase();
     }
@@ -45,24 +45,26 @@ class DatabaseLocalServer {
   }
 
   Future<int> insertTask(TaskDB task) async {
-    Database db = await this.database;
-    return db.insert(this.taskTable, task.toMap());
+    Database? db = await this.database;
+    return db!.insert(this.taskTable, task.toMap());
   }
 
   Future<int> updateTask(int id, TaskDB task) async {
-    Database db = await this.database;
-    return db.update(this.taskTable, task.toMap(),
+    Database? db = await this.database;
+    return db!.update(this.taskTable, task.toMap(),
         where: "$colId = ?", whereArgs: [id]);
   }
 
   Future<int> deleteTask(int id) async {
-    Database db = await this.database;
-    return db.delete(this.taskTable, where: "$colId = ?", whereArgs: [id]);
+    Database? db = await this.database;
+    return db!.rawDelete("""
+        DELETE FROM $taskTable WHERE $colId = $id;
+      """);
   }
 
   Future<List<TaskDB>> getTasks() async {
-    Database db = await this.database;
-    List<Map<String, Object?>> taskMapList = await db.rawQuery("SELECT * FROM $taskTable;");
+    Database? db = await this.database;
+    List<Map<String, Object?>> taskMapList = await db!.rawQuery("SELECT * FROM $taskTable;");
     List<TaskDB> listTask = [];
 
     for (int i=0; i < taskMapList.length; i++) {

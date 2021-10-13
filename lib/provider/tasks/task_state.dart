@@ -26,13 +26,13 @@ class CreateTaskState extends TaskState {
 }
 
 class UpdateTaskState extends TaskState {
-  final Task task;
+  final TaskDB task;
 
   UpdateTaskState({required this.task});
 }
 
 class DeleteTaskState extends TaskState {
-  final String id;
+  final int id;
 
   DeleteTaskState({required this.id});
 }

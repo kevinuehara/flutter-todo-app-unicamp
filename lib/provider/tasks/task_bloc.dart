@@ -13,17 +13,20 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
 
   @override
   Stream<TaskState> mapEventToState(TaskEvent event) async* {
-    TaskLoadingState();
-
     if (event is FetchTaskList) {
       List<TaskDB> tasks = await DatabaseLocalServer.helper.getTasks();
       yield TaskStateLoaded(tasks);
-    } else if (event is CreateTaskEvent) {
-      DatabaseLocalServer.helper.insertTask(event.task);
+    } 
+    else if (event is CreateTaskEvent) {
+      await DatabaseLocalServer.helper.insertTask(event.task);
       yield CreateTaskState(task: event.task);
-    } else if (event is UpdateTaskEvent) {
+    } 
+    else if (event is UpdateTaskEvent) {
+      await DatabaseLocalServer.helper.updateTask(event.id, event.task);
       yield UpdateTaskState(task: event.task);
-    } else if (event is DeleteTaskEvent) {
+    } 
+    else if (event is DeleteTaskEvent) {
+      await DatabaseLocalServer.helper.deleteTask(event.id);
       yield DeleteTaskState(id: event.id);
     }
   }

@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_todoapp/models/task.dart';
 import 'package:flutter_todoapp/models/task_db.dart';
 import 'package:flutter_todoapp/provider/tasks.dart';
+import 'package:flutter_todoapp/provider/tasks/task_bloc.dart';
+import 'package:flutter_todoapp/provider/tasks/task_event.dart';
 import 'package:flutter_todoapp/routes/app_routes.dart';
 import 'package:provider/provider.dart';
 
@@ -52,8 +55,9 @@ class TaskTile extends StatelessWidget {
                           ],
                         )).then((confirmed) {
                   if (confirmed) {
-                    /*Provider.of<Tasks>(context, listen: false)
-                        .remove(task, context); */
+                    BlocProvider.of<TaskBloc>(context)
+                        .add(DeleteTaskEvent(id: task.id!));
+                    BlocProvider.of<TaskBloc>(context).add(FetchTaskList());
                   }
                 });
               },

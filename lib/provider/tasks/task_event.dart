@@ -12,13 +12,14 @@ class CreateTaskEvent extends TaskEvent {
 }
 
 class UpdateTaskEvent extends TaskEvent {
-  final Task task;
+  final TaskDB task;
+  final int id;
   
-  UpdateTaskEvent({required this.task});
+  UpdateTaskEvent({required this.id, required this.task});
 }
 
 class DeleteTaskEvent extends TaskEvent {
-  final String id;
+  final int id;
   
   DeleteTaskEvent({required this.id});
 }

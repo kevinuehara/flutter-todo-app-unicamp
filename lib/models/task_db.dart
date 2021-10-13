@@ -14,6 +14,7 @@ class TaskDB {
   }
 
   TaskDB(id, title, description, createdAt, done) {
+    if (this.id != null) this.id = id;
     this.title = title;
     this.description = description;
     this.createdAt = createdAt;

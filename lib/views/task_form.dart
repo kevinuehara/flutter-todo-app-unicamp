@@ -13,6 +13,8 @@ class TaskForm extends StatelessWidget {
   final _form = GlobalKey<FormState>();
   final Map<String, Object> _formData = {};
 
+  bool isToUpdate = false;
+
   void _loadFormData(TaskDB? task) {
     print(task);
     if (task != null) {
@@ -21,9 +23,11 @@ class TaskForm extends StatelessWidget {
       _formData['description'] = task.description.toString();
       _formData['createdAt'] = task.createdAt.toString();
       _formData['done'] = task.done.toString();
+      this.isToUpdate = true;
     } else {
       _formData['title'] = '';
       _formData['description'] = '';
+      this.isToUpdate = false;
     }
   }
 
@@ -52,16 +56,15 @@ class TaskForm extends StatelessWidget {
                             DateTime.now().toString(),
                             false);
 
-                        BlocProvider.of<TaskBloc>(context)
-                            .add(CreateTaskEvent(task: task));
-                        /*
-                      Provider.of<Tasks>(context, listen: false).put(Task(
-                          id: _formData['id'].toString(),
-                          title: _formData['title'].toString(),
-                          description: _formData['description'].toString(),
-                          createdAt: DateTime.now().toString(),
-                          done: false)); */
-                        Navigator.of(context).pop();
+                        if (!this.isToUpdate) {
+                          BlocProvider.of<TaskBloc>(context)
+                              .add(CreateTaskEvent(task: task));
+                        } else {
+                          BlocProvider.of<TaskBloc>(context)
+                              .add(UpdateTaskEvent(id: int.parse(_formData['id'].toString()), task: task));
+                        }
+
+                       Navigator.of(context).pop();
                       }
                     },
                     icon: Icon(Icons.save))
@@ -114,9 +117,15 @@ class TaskForm extends StatelessWidget {
                       DateTime.now().toString(),
                       false);
 
-                  BlocProvider.of<TaskBloc>(context)
-                      .add(CreateTaskEvent(task: task));
-                 
+                  if (!this.isToUpdate) {
+                    BlocProvider.of<TaskBloc>(context)
+                        .add(CreateTaskEvent(task: task));
+                  } else {
+                    BlocProvider.of<TaskBloc>(context)
+                        .add(UpdateTaskEvent(id: int.parse(_formData['id'].toString()), task: task));
+                  }
+
+                  BlocProvider.of<TaskBloc>(context).add(FetchTaskList());
                   Navigator.of(context).pop();
                 }
               },
