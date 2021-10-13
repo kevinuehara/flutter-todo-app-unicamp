@@ -6,6 +6,7 @@ import 'package:flutter_todoapp/data/mock_tasks.dart';
 import 'package:flutter_todoapp/models/task.dart';
 
 class Tasks with ChangeNotifier {
+  /*
   Map<String, Task> _items = {...MOCK_TASKS};
 
   List<Task> get all {
@@ -52,5 +53,5 @@ class Tasks with ChangeNotifier {
           content: Text("A tarefa \"" + task.title + "\" foi removida!")));
       notifyListeners();
     }
-  }
+  } */
 }

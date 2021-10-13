@@ -51,8 +51,8 @@ class TaskTile extends StatelessWidget {
                           ],
                         )).then((confirmed) {
                   if (confirmed) {
-                    Provider.of<Tasks>(context, listen: false)
-                        .remove(task, context);
+                    /*Provider.of<Tasks>(context, listen: false)
+                        .remove(task, context); */
                   }
                 });
               },
