@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todoapp/models/task_db.dart';
 
 class Task {
   final String id;
@@ -15,5 +16,7 @@ class Task {
     required this.done,
   });
 
-  
+  TaskDB parseTaskToTaskDB(Task task) {
+    return new TaskDB(this.id,this.title, this.description, this.createdAt, this.done);
+  }
 }

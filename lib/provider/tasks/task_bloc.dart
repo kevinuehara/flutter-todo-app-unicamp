@@ -1,5 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_todoapp/data/local/local_database.dart';
 import 'package:flutter_todoapp/data/mock_tasks.dart';
+import 'package:flutter_todoapp/models/collection/task_collection.dart';
+import 'package:flutter_todoapp/models/task_db.dart';
 import 'package:flutter_todoapp/provider/tasks/task_event.dart';
 import 'package:flutter_todoapp/provider/tasks/task_state.dart';
 
@@ -13,8 +16,10 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     TaskLoadingState();
 
     if (event is FetchTaskList) {
-      yield TaskStateLoaded(taskList: MOCK_TASKS);
+      List<TaskDB> tasks = await DatabaseLocalServer.helper.getTasks();
+      yield TaskStateLoaded(tasks);
     } else if (event is CreateTaskEvent) {
+      DatabaseLocalServer.helper.insertTask(event.task);
       yield CreateTaskState(task: event.task);
     } else if (event is UpdateTaskEvent) {
       yield UpdateTaskState(task: event.task);

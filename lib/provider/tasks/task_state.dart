@@ -1,4 +1,5 @@
 import 'package:flutter_todoapp/models/task.dart';
+import 'package:flutter_todoapp/models/task_db.dart';
 
 abstract class TaskState{}
 
@@ -11,13 +12,15 @@ class TaskErrorState extends TaskState {
 }
 
 class TaskStateLoaded extends TaskState {
-  final List<Task> taskList;
+  late List<TaskDB> tasks;
 
-  TaskStateLoaded({required this.taskList});
+  TaskStateLoaded(List<TaskDB> tasks) {
+    this.tasks = tasks;
+  }
 }
 
 class CreateTaskState extends TaskState {
-  final Task task;
+  final TaskDB task;
 
   CreateTaskState({required this.task});
 }

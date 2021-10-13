@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_todoapp/models/task.dart';
+import 'package:flutter_todoapp/models/task_db.dart';
 import 'package:flutter_todoapp/provider/tasks.dart';
 import 'package:flutter_todoapp/routes/app_routes.dart';
 import 'package:provider/provider.dart';
 
 class TaskTile extends StatelessWidget {
-  final Task task;
+  final TaskDB task;
 
   const TaskTile(this.task);
 
@@ -14,7 +15,7 @@ class TaskTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: CircleAvatar(child: Icon(Icons.task_alt)),
-      title: Text(task.title),
+      title: Text(task.title != null ? task.title! : "Sem título"),
       isThreeLine: true,
       dense: true,
       subtitle: Text("${task.description}. Criado em: ${task.createdAt}"),

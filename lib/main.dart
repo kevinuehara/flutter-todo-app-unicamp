@@ -21,14 +21,16 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MultiBlocProvider(
-        providers: [BlocProvider(create: (context) => TaskBloc(TaskLoadingState())..add(FetchTaskList()))],
-        child: TaskList(),
-      )
-      /*routes: {
-        AppRoutes.HOME: (_) => TaskList(),
-        AppRoutes.TASK_FORM: (_) => TaskForm()
-      },*/
+      routes: {
+        AppRoutes.HOME: (_) => MultiBlocProvider(
+          providers: [BlocProvider(create: (context) => TaskBloc(TaskLoadingState())..add(FetchTaskList()))],
+          child: TaskList(),
+        ),
+        AppRoutes.TASK_FORM: (_) => MultiBlocProvider(
+          providers: [BlocProvider(create: (context) => TaskBloc(TaskLoadingState()))],
+          child: TaskForm(),
+        ),
+      },
     );
   }
 }

@@ -1,12 +1,13 @@
 import 'dart:io';
 
+import 'package:flutter_todoapp/models/collection/task_collection.dart';
 import 'package:flutter_todoapp/models/task_db.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DatabaseLocalServer {
   static DatabaseLocalServer helper = DatabaseLocalServer._createInstance();
-  static Database? _database;
+  static late Database _database;
   String taskTable = "task_table";
   String colTitle = "title";
   String colDescription = "description";
@@ -16,7 +17,7 @@ class DatabaseLocalServer {
 
   DatabaseLocalServer._createInstance();
 
-  get database async {
+  Future<Database> get database async {
     if (_database == null) {
       _database = await initializeDatabase();
     }
@@ -59,25 +60,16 @@ class DatabaseLocalServer {
     return db.delete(this.taskTable, where: "$colId = ?", whereArgs: [id]);
   }
 
-  getTasks() async {
+  Future<List<TaskDB>> getTasks() async {
     Database db = await this.database;
     List<Map<String, Object?>> taskMapList = await db.rawQuery("SELECT * FROM $taskTable;");
-    List<TaskDB> taskList = [];
-    List<int> idList = [];
+    List<TaskDB> listTask = [];
 
     for (int i=0; i < taskMapList.length; i++) {
       TaskDB task = TaskDB.fromMap(taskMapList[i]);
-      taskList.add(task);
-      idList.add(int.parse(task.id!));
+      listTask.add(task);
     }
 
-    return [taskList, idList];
-  }
-
-  Future<TaskDB> getTaskById(int id) async {
-    Database db = await this.database;
-    List<Map<String, Object?>> taskMapList = await db.rawQuery("SELECT * FROM $taskTable where $colId = $id;");
-    TaskDB task = TaskDB.fromMap(taskMapList[0]);
-    return task;
+    return listTask;
   }
 }

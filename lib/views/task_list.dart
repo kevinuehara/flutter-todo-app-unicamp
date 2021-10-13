@@ -16,18 +16,18 @@ class TaskList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TaskBloc, TaskState>(
-        bloc: BlocProvider.of<TaskBloc>(context),
+        bloc: BlocProvider.of<TaskBloc>(context)..add(FetchTaskList()),
         builder: (context, state) {
+          
           // Fetch Tasks success
-          if (state is TaskStateLoaded) {
-            print(state);
+          if (state is TaskStateLoaded && state.tasks != null) {
             return DefaultTabController(
               length: 2,
               child: Scaffold(
                 body: TabBarView(children: [
                   ListView.builder(
-                    itemCount: state.taskList.length,
-                    itemBuilder: (ctx, i) => TaskTile(state.taskList[i]),
+                    itemCount: state.tasks.length,
+                    itemBuilder: (ctx, i) => TaskTile(state.tasks[i]),
                   ),
                   TaskAbout()
                 ]),
@@ -42,20 +42,14 @@ class TaskList extends StatelessWidget {
                   actions: [
                     IconButton(
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => TaskForm()),
-                          );
+                          Navigator.of(context).pushNamed(AppRoutes.TASK_FORM).then((_) => BlocProvider.of<TaskBloc>(context)..add(FetchTaskList()));
                         },
                         icon: Icon(Icons.add))
                   ],
                 ),
                 floatingActionButton: FloatingActionButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => TaskForm()),
-                    );
+                    Navigator.of(context).pushNamed(AppRoutes.TASK_FORM).then((_) => BlocProvider.of<TaskBloc>(context)..add(FetchTaskList()));
                   },
                   tooltip: 'Nova Tarefa',
                   child: Icon(Icons.add),
