@@ -8,17 +8,16 @@ import 'package:flutter_todoapp/provider/tasks/task_event.dart';
 import 'package:flutter_todoapp/provider/tasks/task_state.dart';
 import 'package:flutter_todoapp/routes/app_routes.dart';
 import 'package:flutter_todoapp/views/task_about.dart';
+import 'package:flutter_todoapp/views/task_form.dart';
 
 class TaskList extends StatelessWidget {
   const TaskList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
     return BlocBuilder<TaskBloc, TaskState>(
         bloc: BlocProvider.of<TaskBloc>(context),
         builder: (context, state) {
-
           // Fetch Tasks success
           if (state is TaskStateLoaded) {
             print(state);
@@ -43,15 +42,20 @@ class TaskList extends StatelessWidget {
                   actions: [
                     IconButton(
                         onPressed: () {
-                          Navigator.of(context)
-                              .pushNamed(AppRoutes.TASK_FORM);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => TaskForm()),
+                          );
                         },
                         icon: Icon(Icons.add))
                   ],
                 ),
                 floatingActionButton: FloatingActionButton(
                   onPressed: () {
-                    Navigator.of(context).pushNamed(AppRoutes.TASK_FORM);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => TaskForm()),
+                    );
                   },
                   tooltip: 'Nova Tarefa',
                   child: Icon(Icons.add),
