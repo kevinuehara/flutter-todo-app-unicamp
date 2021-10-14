@@ -9,19 +9,27 @@ import 'package:flutter_todoapp/provider/tasks/task_event.dart';
 import 'package:flutter_todoapp/routes/app_routes.dart';
 import 'package:provider/provider.dart';
 
-class TaskTile extends StatelessWidget {
+class TaskTile extends StatefulWidget {
   final TaskDB task;
 
   const TaskTile(this.task);
 
   @override
+  State<StatefulWidget> createState() => _TaskTileState();
+}
+
+@override
+class _TaskTileState extends State<TaskTile> {
+  @override
   Widget build(BuildContext context) {
     return ListTile(
       leading: CircleAvatar(child: Icon(Icons.task_alt)),
-      title: Text(task.title != null ? task.title! : "Sem título"),
+      title:
+          Text(widget.task.title != null ? widget.task.title! : "Sem título"),
       isThreeLine: true,
       dense: true,
-      subtitle: Text("${task.description}. Criado em: ${task.createdAt}"),
+      subtitle: Text(
+          "${widget.task.description}. Criado em: ${widget.task.createdAt}"),
       trailing: Container(
         width: 100,
         child: Row(
@@ -29,7 +37,9 @@ class TaskTile extends StatelessWidget {
             IconButton(
                 onPressed: () {
                   Navigator.of(context)
-                      .pushNamed(AppRoutes.TASK_FORM, arguments: task);
+                      .pushNamed(AppRoutes.TASK_FORM, arguments: widget.task)
+                      .then((_) => BlocProvider.of<TaskBloc>(context)
+                          .add(FetchTaskList()));
                 },
                 color: Colors.blue,
                 icon: Icon(Icons.edit)),
@@ -56,7 +66,7 @@ class TaskTile extends StatelessWidget {
                         )).then((confirmed) {
                   if (confirmed) {
                     BlocProvider.of<TaskBloc>(context)
-                        .add(DeleteTaskEvent(id: task.id!));
+                        .add(DeleteTaskEvent(id: widget.task.id!));
                     BlocProvider.of<TaskBloc>(context).add(FetchTaskList());
                   }
                 });
