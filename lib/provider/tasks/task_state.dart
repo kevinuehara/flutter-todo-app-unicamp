@@ -1,7 +1,6 @@
-import 'package:flutter_todoapp/models/task.dart';
 import 'package:flutter_todoapp/models/task_db.dart';
 
-abstract class TaskState{}
+abstract class TaskState {}
 
 class TaskLoadingState extends TaskState {}
 

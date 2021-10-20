@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_todoapp/provider/tasks.dart';
 import 'package:flutter_todoapp/provider/tasks/task_bloc.dart';
 import 'package:flutter_todoapp/provider/tasks/task_event.dart';
 import 'package:flutter_todoapp/provider/tasks/task_state.dart';
 import 'package:flutter_todoapp/routes/app_routes.dart';
 import 'package:flutter_todoapp/views/task_form.dart';
 import 'package:flutter_todoapp/views/task_list.dart';
-import 'package:provider/provider.dart';
 
 void main() {
   runApp(MyApp());
@@ -23,13 +21,19 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         AppRoutes.HOME: (_) => MultiBlocProvider(
-          providers: [BlocProvider(create: (context) => TaskBloc(TaskLoadingState())..add(FetchTaskList()))],
-          child: TaskList(),
-        ),
+              providers: [
+                BlocProvider(
+                    create: (context) =>
+                        TaskBloc(TaskLoadingState())..add(FetchTaskList()))
+              ],
+              child: TaskList(),
+            ),
         AppRoutes.TASK_FORM: (_) => MultiBlocProvider(
-          providers: [BlocProvider(create: (context) => TaskBloc(TaskLoadingState()))],
-          child: TaskForm(),
-        ),
+              providers: [
+                BlocProvider(create: (context) => TaskBloc(TaskLoadingState()))
+              ],
+              child: TaskForm(),
+            ),
       },
     );
   }

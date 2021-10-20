@@ -1,4 +1,3 @@
-import 'package:flutter_todoapp/models/task.dart';
 import 'package:flutter_todoapp/models/task_db.dart';
 
 class TaskCollection {

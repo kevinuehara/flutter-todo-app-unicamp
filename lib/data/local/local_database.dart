@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:flutter_todoapp/models/collection/task_collection.dart';
 import 'package:flutter_todoapp/models/task_db.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -64,10 +63,11 @@ class DatabaseLocalServer {
 
   Future<List<TaskDB>> getTasks() async {
     Database? db = await this.database;
-    List<Map<String, Object?>> taskMapList = await db!.rawQuery("SELECT * FROM $taskTable;");
+    List<Map<String, Object?>> taskMapList =
+        await db!.rawQuery("SELECT * FROM $taskTable;");
     List<TaskDB> listTask = [];
 
-    for (int i=0; i < taskMapList.length; i++) {
+    for (int i = 0; i < taskMapList.length; i++) {
       TaskDB task = TaskDB.fromMap(taskMapList[i]);
       listTask.add(task);
     }

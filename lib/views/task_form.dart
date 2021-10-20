@@ -1,13 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_todoapp/models/task.dart';
 import 'package:flutter_todoapp/models/task_db.dart';
-import 'package:flutter_todoapp/provider/tasks.dart';
 import 'package:flutter_todoapp/provider/tasks/task_bloc.dart';
 import 'package:flutter_todoapp/provider/tasks/task_event.dart';
 import 'package:flutter_todoapp/provider/tasks/task_state.dart';
-import 'package:provider/provider.dart';
 
 class TaskForm extends StatelessWidget {
   final _form = GlobalKey<FormState>();
@@ -48,23 +45,27 @@ class TaskForm extends StatelessWidget {
                       final isValid = _form.currentState!.validate();
                       if (isValid) {
                         _form.currentState!.save();
+                        bool done =
+                            (_formData['done'] == 'true') ? true : false;
 
                         TaskDB task = new TaskDB(
                             _formData['id'].toString(),
                             _formData['title'].toString(),
                             _formData['description'].toString(),
                             DateTime.now().toString(),
-                            false);
+                            done);
 
                         if (!this.isToUpdate) {
                           BlocProvider.of<TaskBloc>(context)
                               .add(CreateTaskEvent(task: task));
                         } else {
-                          BlocProvider.of<TaskBloc>(context)
-                              .add(UpdateTaskEvent(id: int.parse(_formData['id'].toString()), task: task));
+                          BlocProvider.of<TaskBloc>(context).add(
+                              UpdateTaskEvent(
+                                  id: int.parse(_formData['id'].toString()),
+                                  task: task));
                         }
 
-                       Navigator.of(context).pop();
+                        Navigator.of(context).pop();
                       }
                     },
                     icon: Icon(Icons.save))
@@ -109,20 +110,21 @@ class TaskForm extends StatelessWidget {
                 final isValid = _form.currentState!.validate();
                 if (isValid) {
                   _form.currentState!.save();
+                  bool done = (_formData['done'] == 'true') ? true : false;
 
                   TaskDB task = new TaskDB(
                       _formData['id'].toString(),
                       _formData['title'].toString(),
                       _formData['description'].toString(),
                       DateTime.now().toString(),
-                      false);
+                      done);
 
                   if (!this.isToUpdate) {
                     BlocProvider.of<TaskBloc>(context)
                         .add(CreateTaskEvent(task: task));
                   } else {
-                    BlocProvider.of<TaskBloc>(context)
-                        .add(UpdateTaskEvent(id: int.parse(_formData['id'].toString()), task: task));
+                    BlocProvider.of<TaskBloc>(context).add(UpdateTaskEvent(
+                        id: int.parse(_formData['id'].toString()), task: task));
                   }
 
                   BlocProvider.of<TaskBloc>(context).add(FetchTaskList());

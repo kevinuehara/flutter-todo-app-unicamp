@@ -1,7 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_todoapp/data/local/local_database.dart';
-import 'package:flutter_todoapp/data/mock_tasks.dart';
-import 'package:flutter_todoapp/models/collection/task_collection.dart';
 import 'package:flutter_todoapp/models/task_db.dart';
 import 'package:flutter_todoapp/provider/tasks/task_event.dart';
 import 'package:flutter_todoapp/provider/tasks/task_state.dart';

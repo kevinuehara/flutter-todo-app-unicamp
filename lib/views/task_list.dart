@@ -2,13 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_todoapp/components/task_tile.dart';
-import 'package:flutter_todoapp/provider/tasks.dart';
 import 'package:flutter_todoapp/provider/tasks/task_bloc.dart';
 import 'package:flutter_todoapp/provider/tasks/task_event.dart';
 import 'package:flutter_todoapp/provider/tasks/task_state.dart';
 import 'package:flutter_todoapp/routes/app_routes.dart';
 import 'package:flutter_todoapp/views/task_about.dart';
-import 'package:flutter_todoapp/views/task_form.dart';
 
 class TaskList extends StatelessWidget {
   const TaskList({Key? key}) : super(key: key);
@@ -18,7 +16,6 @@ class TaskList extends StatelessWidget {
     return BlocBuilder<TaskBloc, TaskState>(
         bloc: BlocProvider.of<TaskBloc>(context)..add(FetchTaskList()),
         builder: (context, state) {
-          
           // Fetch Tasks success
           if (state is TaskStateLoaded && state.tasks != null) {
             return DefaultTabController(
@@ -42,14 +39,19 @@ class TaskList extends StatelessWidget {
                   actions: [
                     IconButton(
                         onPressed: () {
-                          Navigator.of(context).pushNamed(AppRoutes.TASK_FORM).then((_) => BlocProvider.of<TaskBloc>(context).add(FetchTaskList()));
+                          Navigator.of(context)
+                              .pushNamed(AppRoutes.TASK_FORM)
+                              .then((_) => BlocProvider.of<TaskBloc>(context)
+                                  .add(FetchTaskList()));
                         },
                         icon: Icon(Icons.add))
                   ],
                 ),
                 floatingActionButton: FloatingActionButton(
                   onPressed: () {
-                    Navigator.of(context).pushNamed(AppRoutes.TASK_FORM).then((_) => BlocProvider.of<TaskBloc>(context).add(FetchTaskList()));
+                    Navigator.of(context).pushNamed(AppRoutes.TASK_FORM).then(
+                        (_) => BlocProvider.of<TaskBloc>(context)
+                            .add(FetchTaskList()));
                   },
                   tooltip: 'Nova Tarefa',
                   child: Icon(Icons.add),
@@ -57,13 +59,11 @@ class TaskList extends StatelessWidget {
               ),
             );
           }
-
           if (state is UpdateTaskState) {
-                          
-            print("AAAAAAAAAAa");
+            BlocProvider.of<TaskBloc>(context).add(FetchTaskList());
           }
 
-          return CircularProgressIndicator();
+          return Container();
         });
   }
 }

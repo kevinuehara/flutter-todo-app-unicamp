@@ -1,13 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_todoapp/models/task.dart';
 import 'package:flutter_todoapp/models/task_db.dart';
-import 'package:flutter_todoapp/provider/tasks.dart';
 import 'package:flutter_todoapp/provider/tasks/task_bloc.dart';
 import 'package:flutter_todoapp/provider/tasks/task_event.dart';
 import 'package:flutter_todoapp/routes/app_routes.dart';
-import 'package:provider/provider.dart';
 
 class TaskTile extends StatefulWidget {
   final TaskDB task;
@@ -31,9 +28,21 @@ class _TaskTileState extends State<TaskTile> {
       subtitle: Text(
           "${widget.task.description}. Criado em: ${widget.task.createdAt}"),
       trailing: Container(
-        width: 100,
+        width: 144,
         child: Row(
           children: [
+            Checkbox(
+              value: widget.task.done,
+              onChanged: (bool? value) {
+                setState(() {
+                  widget.task.done = value;
+                  print(widget.task.done);
+                  BlocProvider.of<TaskBloc>(context).add(UpdateTaskEvent(
+                      id: int.parse(widget.task.id.toString()),
+                      task: widget.task));
+                });
+              },
+            ),
             IconButton(
                 onPressed: () {
                   Navigator.of(context)

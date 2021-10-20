@@ -1,9 +1,5 @@
-import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_todoapp/data/mock_tasks.dart';
-import 'package:flutter_todoapp/models/task.dart';
 
 class Tasks with ChangeNotifier {
   /*
