@@ -18,6 +18,14 @@ class TaskStateLoaded extends TaskState {
   }
 }
 
+class TaskStateUpdated extends TaskState {
+  late List<TaskDB> tasks;
+
+  TaskStateUpdated(List<TaskDB> tasks) {
+    this.tasks = tasks;
+  }
+}
+
 class CreateTaskState extends TaskState {
   final TaskDB task;
 

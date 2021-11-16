@@ -59,11 +59,51 @@ class TaskList extends StatelessWidget {
               ),
             );
           }
-          if (state is UpdateTaskState) {
-            BlocProvider.of<TaskBloc>(context).add(FetchTaskList());
+          if (state is TaskStateUpdated) {
+            return DefaultTabController(
+              length: 2,
+              child: Scaffold(
+                body: TabBarView(children: [
+                  ListView.builder(
+                    itemCount: state.tasks.length,
+                    itemBuilder: (ctx, i) => TaskTile(state.tasks[i]),
+                  ),
+                  TaskAbout()
+                ]),
+                appBar: AppBar(
+                  title: Text('Lista de tarefas'),
+                  bottom: TabBar(
+                    tabs: [
+                      Tab(icon: Icon(Icons.check_box)),
+                      Tab(icon: Icon(Icons.info))
+                    ],
+                  ),
+                  actions: [
+                    IconButton(
+                        onPressed: () {
+                          Navigator.of(context)
+                              .pushNamed(AppRoutes.TASK_FORM)
+                              .then((_) => BlocProvider.of<TaskBloc>(context)
+                                  .add(FetchTaskList()));
+                        },
+                        icon: Icon(Icons.add))
+                  ],
+                ),
+                floatingActionButton: FloatingActionButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(AppRoutes.TASK_FORM).then(
+                        (_) => BlocProvider.of<TaskBloc>(context)
+                            .add(FetchTaskList()));
+                  },
+                  tooltip: 'Nova Tarefa',
+                  child: Icon(Icons.add),
+                ),
+              ),
+            );
           }
 
           return Container();
+          //throw Exception('Estado inválido');
         });
   }
 }

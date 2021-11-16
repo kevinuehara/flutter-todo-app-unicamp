@@ -36,8 +36,7 @@ class _TaskTileState extends State<TaskTile> {
               onChanged: (bool? value) {
                 setState(() {
                   widget.task.done = value;
-                  print(widget.task.done);
-                  BlocProvider.of<TaskBloc>(context).add(UpdateTaskEvent(
+                  BlocProvider.of<TaskBloc>(context).add(UpdateTaskList(
                       id: int.parse(widget.task.id.toString()),
                       task: widget.task));
                 });

@@ -4,6 +4,13 @@ abstract class TaskEvent {}
 
 class FetchTaskList extends TaskEvent {}
 
+class UpdateTaskList extends TaskEvent {
+  final TaskDB task;
+  final int id;
+
+  UpdateTaskList({required this.id, required this.task});
+}
+
 class CreateTaskEvent extends TaskEvent {
   final TaskDB task;
 
