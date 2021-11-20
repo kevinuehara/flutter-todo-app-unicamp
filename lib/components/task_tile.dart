@@ -37,7 +37,7 @@ class _TaskTileState extends State<TaskTile> {
                 setState(() {
                   widget.task.done = value;
                   BlocProvider.of<TaskBloc>(context).add(UpdateTaskList(
-                      id: int.parse(widget.task.id.toString()),
+                      id: widget.task.id,
                       task: widget.task));
                 });
               },

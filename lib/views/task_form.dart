@@ -61,7 +61,7 @@ class TaskForm extends StatelessWidget {
                         } else {
                           BlocProvider.of<TaskBloc>(context).add(
                               UpdateTaskEvent(
-                                  id: int.parse(_formData['id'].toString()),
+                                  id: _formData['id'].toString(),
                                   task: task));
                         }
 
@@ -124,7 +124,7 @@ class TaskForm extends StatelessWidget {
                         .add(CreateTaskEvent(task: task));
                   } else {
                     BlocProvider.of<TaskBloc>(context).add(UpdateTaskEvent(
-                        id: int.parse(_formData['id'].toString()), task: task));
+                        id: _formData['id'].toString(), task: task));
                   }
 
                   BlocProvider.of<TaskBloc>(context).add(FetchTaskList());

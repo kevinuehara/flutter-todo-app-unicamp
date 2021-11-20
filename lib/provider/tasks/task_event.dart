@@ -6,9 +6,9 @@ class FetchTaskList extends TaskEvent {}
 
 class UpdateTaskList extends TaskEvent {
   final TaskDB task;
-  final int id;
+  final String? id;
 
-  UpdateTaskList({required this.id, required this.task});
+  UpdateTaskList({this.id, required this.task});
 }
 
 class CreateTaskEvent extends TaskEvent {
@@ -19,13 +19,13 @@ class CreateTaskEvent extends TaskEvent {
 
 class UpdateTaskEvent extends TaskEvent {
   final TaskDB task;
-  final int id;
+  final String id;
 
   UpdateTaskEvent({required this.id, required this.task});
 }
 
 class DeleteTaskEvent extends TaskEvent {
-  final int id;
+  final String id;
 
   DeleteTaskEvent({required this.id});
 }

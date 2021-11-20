@@ -1,15 +1,15 @@
 class TaskDB {
-  int? id;
+  String? id;
   String? title;
   String? description;
   String? createdAt;
   bool? done;
 
   TaskDB.fromMap(map) {
-    this.id = map["id"];
+    this.id = map["_id"];
     this.createdAt = map["createdAt"];
     this.description = map["description"];
-    this.done = map["done"] == 1 ? true : false;
+    this.done = map["done"];
     this.title = map["title"];
   }
 

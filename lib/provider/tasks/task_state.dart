@@ -39,7 +39,7 @@ class UpdateTaskState extends TaskState {
 }
 
 class DeleteTaskState extends TaskState {
-  final int id;
+  final String id;
 
   DeleteTaskState({required this.id});
 }

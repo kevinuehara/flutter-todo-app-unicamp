@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_todoapp/components/task_tile.dart';
+import 'package:flutter_todoapp/models/task_db.dart';
 import 'package:flutter_todoapp/provider/tasks/task_bloc.dart';
 import 'package:flutter_todoapp/provider/tasks/task_event.dart';
 import 'package:flutter_todoapp/provider/tasks/task_state.dart';
@@ -11,6 +12,7 @@ import 'package:flutter_todoapp/views/task_about.dart';
 class TaskList extends StatelessWidget {
   const TaskList({Key? key}) : super(key: key);
 
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TaskBloc, TaskState>(
@@ -18,6 +20,7 @@ class TaskList extends StatelessWidget {
         builder: (context, state) {
           // Fetch Tasks success
           if (state is TaskStateLoaded && state.tasks != null) {
+
             return DefaultTabController(
               length: 2,
               child: Scaffold(
@@ -60,6 +63,7 @@ class TaskList extends StatelessWidget {
             );
           }
           if (state is TaskStateUpdated) {
+            
             return DefaultTabController(
               length: 2,
               child: Scaffold(
